@@ -1,16 +1,17 @@
 import { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import Navbar from "./components/Navbar";
+import LoadingSpinner from "./components/LoadingSpinner";
 import { Toaster } from "react-hot-toast";
 
 import { useUserStore } from "./stores/useUserStore";
 
 function App() {
-  const { user, checkAuth } = useUserStore();
+  const { user, checkingAuth, checkAuth } = useUserStore();
 
   useEffect(() => {
     checkAuth();
@@ -31,8 +32,12 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/' element={<HomePage />} />
-          <Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to='/' />} />
+          <Route path='/signup' element={!user ? <SignupPage /> : <Navigate to='/' />} />
           <Route path='/login' element={!user ? <LoginPage /> : <Navigate to='/' />} />
+          <Route
+            path='/secret-dashboard'
+            element={user?.role === "admin" ? <AdminPage /> : <Navigate to='/login' />}
+          />
         </Routes>
       </div>
       <Toaster />
