@@ -11,6 +11,7 @@ import analyticsRoutes from './routes/analytics.route.js';
 import { connectDB } from './lib/db.js';
 import cookieParser from 'cookie-parser';
 import cors from "cors";
+import path from 'path';
 
 dotenv.config();
 
@@ -37,7 +38,8 @@ app.use("/api/analytics", analyticsRoutes);
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-    app.get("*", (req, res) => {
+    // Use regex to match all routes - this bypasses the * parsing issue
+    app.get(/.*/, (req, res) => {
         res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
     });
 }
