@@ -54,7 +54,7 @@ const Navbar = () => {
                                 to={"/secret-dashboard"}
                             >
                                 <Lock className='inline-block mr-1' size={18} />
-                                <span className='hidden sm:inline'>Dashboard</span>
+                                <span className='hidden sm:inline'>Admin</span>
                             </Link>
                         )}
 
