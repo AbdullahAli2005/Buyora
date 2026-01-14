@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: import.meta.mode === 'development' ? 'http://localhost:5000/api' : 'http://localhost:5000/api',
+    baseURL: import.meta.env.MODE === "development"
+        ? "http://localhost:5000/api"
+        : "https://buyora-production.up.railway.app/api",
     withCredentials: true,
 });
 
